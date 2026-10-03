@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MHD Playground</title>
+<meta name="description" content="Stir a magnetized fluid with your finger and watch its field lines bend, snap back, and reconnect: two-dimensional magnetohydrodynamics on your GPU.">
+<meta name="theme-color" content="#070d1f">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='%23e8f0ff' stroke-width='1.6' stroke-linecap='round'%3E%3Cpath d='M2 7c5-4 9 4 20 0M2 12c5-4 9 4 20 0M2 17c5-4 9 4 20 0'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>MHD Playground</h1>
+  <p>Drag across the field lines to stir a magnetized fluid. Bent field lines
+     pull back like rubber bands, and opposite ones pushed together
+     reconnect.</p>
+</header>
+
+<main>
+  <div class="stage">
+    <canvas id="view" role="img" aria-label="A magnetized fluid: field lines over a map of the electric current"></canvas>
+    <p id="overlay"></p>
+  </div>
+
+  <div class="controls">
+    <div class="row buttons">
+      <button id="play">Pause</button>
+      <button id="reset">Reset</button>
+      <button id="save">Save</button>
+    </div>
+    <p id="status" aria-live="off">&nbsp;</p>
+
+    <label class="field">Start from
+      <select id="preset"></select>
+    </label>
+    <p id="preset-note" class="note"></p>
+
+    <label class="field">Color shows
+      <select id="color">
+        <option value="current">Current, out of (red) or into (blue) the screen</option>
+        <option value="vorticity">Vorticity, counterclockwise (red) or clockwise (blue)</option>
+      </select>
+    </label>
+
+    <label class="field">Grid
+      <select id="grid">
+        <option value="128">128 × 128, fast</option>
+        <option value="256">256 × 256</option>
+        <option value="384">384 × 384</option>
+        <option value="512">512 × 512, sharp</option>
+      </select>
+    </label>
+
+    <details id="parameters">
+      <summary>Parameters</summary>
+      <div id="sliders"></div>
+    </details>
+  </div>
+</main>
+
+<footer>
+  <p>The field lies in the plane, so it is the curl of a single flux
+     function <i>A</i>, whose contours are the field lines drawn here, and
+     the flow carries <i>A</i> along like dye. The fluid is incompressible,
+     pushed by the Lorentz force <i>J</i>&thinsp;×&thinsp;<i>B</i>, and
+     solved on your GPU with Stam’s
+     <a href="https://doi.org/10.1145/311535.311548">“Stable Fluids”</a>
+     method on a grid that wraps around at its edges.
+     Reconnection is set by the resistivity and the grid’s own diffusion.
+     <a href="https://github.com/roytsmart/mhd-playground">Source on GitHub</a>.</p>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
